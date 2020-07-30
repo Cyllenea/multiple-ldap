@@ -1,0 +1,14 @@
+{
+    "name": "cyllenea/multiple-ldap",
+    "description": "Multiple LDAP Authenticator",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">= 7.4",
+        "ext-ldap": "*"
+    },
+
+    "autoload": {
+        "psr-4": { "cyllenea\\ldap\\": "src/" }
+    }
+}
