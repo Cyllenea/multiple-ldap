@@ -49,11 +49,10 @@ class LDAP
      */
     public function login(string $username, string $password)
     {
-
+        $i = 1;
+        
         /** @var Controller $controller */
         foreach ($this->controllers as $controller) {
-
-            sleep(1);
 
             if ($this->ldap = @ldap_connect($controller->getHost(), $controller->getPort())) {
                 // Configure ldap params
@@ -68,6 +67,13 @@ class LDAP
                     $this->disconnect();
                 }
             }
+            
+            // Wait between requests
+            if ($i !== count($this->controllers)) {
+                usleep(250000);
+            }
+            $i++;
+            
         }
 
         if (!$this->loggedIn) {
@@ -148,6 +154,7 @@ class LDAP
     {
         if($this->ldap) {
             @ldap_unbind($this->ldap);
+            $this->ldap = null;
         }
         $this->loggedIn = null;
     }
