@@ -65,7 +65,7 @@ class LDAP
                     $this->loggedIn = $controller;
                     break;
                 } else {
-                    @ldap_unbind($this->ldap);
+                    $this->disconnect();
                 }
             }
         }
@@ -146,7 +146,9 @@ class LDAP
 
     public function disconnect(): void
     {
-        @ldap_unbind($this->ldap);
+        if($this->ldap) {
+            @ldap_unbind($this->ldap);
+        }
         $this->loggedIn = null;
     }
 
